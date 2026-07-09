@@ -9,16 +9,18 @@ import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import * as React from "react";
-import { Link as RouterLink, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useNotifications } from "../../components/notifications/use-notifications.ts";
 import { useDeleteBridge, useResetBridge } from "../../hooks/data/bridges.ts";
 import { navigation } from "../../routes.tsx";
 
 export interface BridgeMoreMenuProps {
   bridge: string;
+  /** 若提供则"Edit"项调用此回调（用于父组件打开 Drawer），否则保持原路由跳转行为 */
+  onEdit?: () => void;
 }
 
-export const BridgeMoreMenu = ({ bridge }: BridgeMoreMenuProps) => {
+export const BridgeMoreMenu = ({ bridge, onEdit }: BridgeMoreMenuProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -31,6 +33,15 @@ export const BridgeMoreMenu = ({ bridge }: BridgeMoreMenuProps) => {
   const handleOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+
+  const handleEdit = () => {
+    handleClose();
+    if (onEdit) {
+      onEdit();
+    } else {
+      navigate(navigation.editBridge(bridge));
+    }
+  };
 
   const handleFactoryReset = async () => {
     handleClose();
@@ -72,7 +83,7 @@ export const BridgeMoreMenu = ({ bridge }: BridgeMoreMenuProps) => {
         <MoreVert />
       </IconButton>
       <Menu open={open} onClose={handleClose} anchorEl={anchorEl}>
-        <MenuItem component={RouterLink} to={navigation.editBridge(bridge)}>
+        <MenuItem onClick={handleEdit}>
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>

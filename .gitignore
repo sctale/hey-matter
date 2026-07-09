@@ -4,6 +4,9 @@
 # IDEs
 .idea/
 
+# Trae workspace
+.trae/
+
 # Personal Configs
 .env
 .local-storage/
@@ -13,7 +16,6 @@
 node_modules/
 
 # Release assets
-CHANGELOG.md
 CHANGELOG_FULL.md
 RELEASE_VERSION
 RELEASE_CHANNEL

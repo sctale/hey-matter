@@ -45,3 +45,23 @@ Please see the [documentation](https://t0bst4r.github.io/home-assistant-matter-h
 known issues, limitations and guides.
 
 ---
+
+## Frontend UX Enhancements (Fork Improvements)
+
+This fork enhances the web UI experience with the following improvements:
+
+### 1. Inline Drawer Editor
+- Bridge configuration can now be edited **without leaving the details page**.
+- Click the **Edit** icon (or the "Edit" menu item) on the bridge details page to open a right-side **Drawer** containing the full configuration editor.
+- Reduces the previous 4-step navigation (list → details → more menu → edit page) to **zero page jumps**.
+
+### 2. Manual Refresh Button
+- A **Refresh** button is now available on the bridge details page to immediately reload device states, without waiting for the next polling cycle.
+
+### 3. Fixed Polling Tooltip
+- The tooltip previously stated "every 30 seconds" while the actual polling interval was 10 seconds. This has been corrected.
+
+### 4. Auto-Refreshing Bridge List
+- The bridges list page now **auto-refreshes every 30 seconds**, so newly created or deleted bridges appear without a manual browser refresh.
+
+---
