@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: package.tgz
-          path: apps/home-assistant-matter-hub/package.tgz
+          path: apps/hey-matter/package.tgz
       - name: Upload Documentation
         if: steps.release.outputs.release-version != ''
         uses: actions/upload-pages-artifact@v4
@@ -110,7 +110,7 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           name: package.tgz
-          path: apps/home-assistant-matter-hub/
+          path: apps/hey-matter/
           merge-multiple: true
 
       - name: Build Docker
@@ -144,7 +144,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.ADDON_REPOSITORY_PAT }}
-          repository: "t0bst4r/home-assistant-addons"
+          repository: "sctale/home-assistant-addons"
           event-type: release
           client-payload: |
             {

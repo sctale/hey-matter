@@ -5,8 +5,8 @@ import { rimraf } from "rimraf";
 
 const projectRoot = path.join(import.meta.dirname, "../..");
 
-const frontend = packageDir("@home-assistant-matter-hub/frontend", "dist");
-const backend = packageDir("@home-assistant-matter-hub/backend", "dist");
+const frontend = packageDir("@hey-matter/frontend", "dist");
+const backend = packageDir("@hey-matter/backend", "dist");
 
 const dist = path.resolve(import.meta.dirname, "dist");
 await rimraf(dist);

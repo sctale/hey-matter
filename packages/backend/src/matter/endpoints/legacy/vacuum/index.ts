@@ -1,4 +1,4 @@
-import { VacuumDeviceFeature } from "@home-assistant-matter-hub/common";
+import { VacuumDeviceFeature } from "@hey-matter/common";
 import type { EndpointType } from "@matter/main";
 import { RoboticVacuumCleanerDevice } from "@matter/main/devices";
 import { testBit } from "../../../../utils/test-bit.js";

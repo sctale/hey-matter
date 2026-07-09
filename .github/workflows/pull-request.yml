@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: package.tgz
-          path: apps/home-assistant-matter-hub/package.tgz
+          path: apps/hey-matter/package.tgz
 
   prepare-docker:
     name: "Prepare Docker"
@@ -65,7 +65,7 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           name: package.tgz
-          path: apps/home-assistant-matter-hub/
+          path: apps/hey-matter/
           merge-multiple: true
 
       - name: Build Docker

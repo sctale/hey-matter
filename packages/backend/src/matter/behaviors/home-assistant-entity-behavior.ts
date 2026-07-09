@@ -1,7 +1,7 @@
 import {
   ClusterId,
   type HomeAssistantEntityInformation,
-} from "@home-assistant-matter-hub/common";
+} from "@hey-matter/common";
 import { Behavior, EventEmitter } from "@matter/main";
 
 import {

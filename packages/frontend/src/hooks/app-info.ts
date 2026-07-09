@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import packageJson from "../../../../apps/home-assistant-matter-hub/package.json";
+import packageJson from "../../../../apps/hey-matter/package.json";
 
 export interface AppInfo {
   name: string;

@@ -1,5 +1,5 @@
 {
-  "name": "@home-assistant-matter-hub/backend",
+  "name": "@hey-matter/backend",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "help": "tsx src/cli.ts start --help"
   },
   "dependencies": {
-    "@home-assistant-matter-hub/common": "workspace:*",
+    "@hey-matter/common": "workspace:*",
     "@matter/main": "0.16.7",
     "@matter/nodejs": "0.16.7",
     "@matter/general": "0.16.7",

@@ -1,4 +1,4 @@
-import type { BridgeConfig } from "@home-assistant-matter-hub/common";
+import type { BridgeConfig } from "@hey-matter/common";
 import EditIcon from "@mui/icons-material/Edit";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Box from "@mui/material/Box";

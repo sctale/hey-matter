@@ -1,5 +1,5 @@
 {
-  "name": "@home-assistant-matter-hub/frontend",
+  "name": "@hey-matter/frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@codemirror/lang-json": "^6.0.2",
     "@codemirror/lint": "^6.9.2",
-    "@home-assistant-matter-hub/common": "workspace:*",
+    "@hey-matter/common": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.9",

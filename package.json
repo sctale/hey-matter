@@ -1,5 +1,5 @@
 {
-  "name": "@home-assistant-matter-hub/root",
+  "name": "@hey-matter/root",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -15,18 +15,18 @@
     "pretest": "pnpm run build:minimum",
     "test": "pnpm -r run test",
     "build": "pnpm -r run build",
-    "build:minimum": "pnpm --filter @home-assistant-matter-hub/common run build",
+    "build:minimum": "pnpm --filter @hey-matter/common run build",
     "build:app": "pnpm --filter './packages/*' run build",
     "preserve": "pnpm run build:minimum",
     "serve": "pnpm -r --parallel run serve",
     "start": "pnpm run serve",
     "preproduction": "pnpm run build:app",
-    "production": "pnpm --filter home-assistant-matter-hub run start",
+    "production": "pnpm --filter hey-matter run start",
     "check-updates": "npx npm-check-updates --workspaces --root -u",
     "release": "semantic-release",
     "release:version": "pnpm version --workspaces --no-workspaces-update --no-git-tag-version --allow-same-version",
-    "release:pack": "pnpm --filter home-assistant-matter-hub run bundle",
-    "release:publish": "pnpm publish apps/home-assistant-matter-hub/package.tgz --provenance --no-git-checks --access public --loglevel verbose --tag ${CHANNEL:-latest}"
+    "release:pack": "pnpm --filter hey-matter run bundle",
+    "release:publish": "pnpm publish apps/hey-matter/package.tgz --provenance --no-git-checks --access public --loglevel verbose --tag ${CHANNEL:-latest}"
   },
   "workspaces": [
     "apps/*",

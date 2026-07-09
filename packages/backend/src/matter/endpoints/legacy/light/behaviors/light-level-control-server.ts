@@ -1,7 +1,7 @@
 import type {
   HomeAssistantEntityState,
   LightDeviceAttributes,
-} from "@home-assistant-matter-hub/common";
+} from "@hey-matter/common";
 import {
   type LevelControlConfig,
   LevelControlServer,

@@ -1,4 +1,4 @@
-import type { EndpointData } from "@home-assistant-matter-hub/common";
+import type { EndpointData } from "@hey-matter/common";
 import { type AppState, createAppSelector } from "../types.ts";
 import type { AsyncState } from "../utils/async.ts";
 

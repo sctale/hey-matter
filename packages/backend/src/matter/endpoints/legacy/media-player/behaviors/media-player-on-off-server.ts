@@ -1,7 +1,7 @@
 import type {
   HomeAssistantEntityState,
   MediaPlayerDeviceAttributes,
-} from "@home-assistant-matter-hub/common";
+} from "@hey-matter/common";
 import { OnOffServer } from "../../../../behaviors/on-off-server.js";
 
 export const MediaPlayerOnOffServer = OnOffServer({

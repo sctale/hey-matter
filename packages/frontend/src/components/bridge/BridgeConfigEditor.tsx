@@ -1,7 +1,7 @@
 import {
   type BridgeConfig,
   bridgeConfigSchema,
-} from "@home-assistant-matter-hub/common";
+} from "@hey-matter/common";
 import { LibraryBooks, TextFields } from "@mui/icons-material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";

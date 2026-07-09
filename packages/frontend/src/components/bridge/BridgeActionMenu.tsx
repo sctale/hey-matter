@@ -1,4 +1,4 @@
-import type { BridgeData } from "@home-assistant-matter-hub/common";
+import type { BridgeData } from "@hey-matter/common";
 
 export interface BridgeActionMenuProps {
   bridge: BridgeData;

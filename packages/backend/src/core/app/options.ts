@@ -65,10 +65,10 @@ export class Options {
     return {
       basicInformation: {
         vendorId: VendorId(0xfff1),
-        vendorName: "t0bst4r",
+        vendorName: "sctale",
         productId: 0x8000,
-        productName: "MatterHub",
-        productLabel: "Home Assistant Matter Hub",
+        productName: "HeyMatter",
+        productLabel: "Hey Matter",
         hardwareVersion: new Date().getFullYear(),
         softwareVersion: new Date().getFullYear(),
       },

@@ -1,4 +1,4 @@
-import type { HomeAssistantEntityInformation } from "@home-assistant-matter-hub/common";
+import type { HomeAssistantEntityInformation } from "@hey-matter/common";
 import type { ActionContext } from "@matter/main";
 import { FanControlServer as Base } from "@matter/main/behaviors";
 import { FanControl } from "@matter/main/clusters";

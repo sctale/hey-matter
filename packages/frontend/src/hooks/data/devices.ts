@@ -1,4 +1,4 @@
-import type { EndpointData } from "@home-assistant-matter-hub/common";
+import type { EndpointData } from "@hey-matter/common";
 import { useMemo } from "react";
 import { selectDevices } from "../../state/devices/device-selectors.ts";
 import { useAppSelector } from "../../state/hooks.ts";
