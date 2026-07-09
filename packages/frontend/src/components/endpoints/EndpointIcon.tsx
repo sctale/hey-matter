@@ -67,7 +67,7 @@ export const EndpointIcon = ({ endpoint }: EndpointIconProps) => {
   }, [endpoint]);
 
   return (
-    <Tooltip title={`${endpoint.type.name} (${endpoint.type.id})`}>
+    <Tooltip title={`${endpoint.type.name}（${endpoint.type.id}）`}>
       {SelectedIcon}
     </Tooltip>
   );

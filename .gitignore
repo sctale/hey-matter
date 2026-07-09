@@ -14,6 +14,7 @@
 
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Release assets
 CHANGELOG_FULL.md

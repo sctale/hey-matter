@@ -42,7 +42,7 @@ export const FabricIcon = ({ fabric }: FabricIconProps) => {
   const BrandIcon = useMemo(() => getIcon(fabric), [fabric]);
   return (
     <Tooltip
-      title={`${fabric.label} (0x${fabric.rootVendorId.toString(16)})`}
+      title={`${fabric.label}（0x${fabric.rootVendorId.toString(16)}）`}
       arrow
     >
       <Box

@@ -30,7 +30,7 @@ export const BridgesPage = () => {
   useEffect(() => {
     if (bridgeError) {
       notifications.show({
-        message: bridgeError.message ?? "Could not load bridges",
+        message: bridgeError.message ?? "无法加载 Bridge 列表",
         severity: "error",
       });
     }
@@ -55,8 +55,7 @@ export const BridgesPage = () => {
               paddingTop={{ xs: 1, sm: 0 }}
             >
               <Typography variant="body2" color="textSecondary">
-                Auto-refreshing every {BRIDGE_LIST_REFRESH_INTERVAL_SECONDS}{" "}
-                seconds
+                每 {BRIDGE_LIST_REFRESH_INTERVAL_SECONDS} 秒自动刷新
               </Typography>
               <Button
                 component={Link}
@@ -64,7 +63,7 @@ export const BridgesPage = () => {
                 endIcon={<Add />}
                 variant="outlined"
               >
-                Create new bridge
+                创建新 Bridge
               </Button>
             </Box>
 

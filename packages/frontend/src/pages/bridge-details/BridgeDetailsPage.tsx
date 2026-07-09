@@ -1,4 +1,5 @@
 import type { BridgeConfig } from "@hey-matter/common";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Box from "@mui/material/Box";
@@ -8,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Breadcrumbs } from "../../components/breadcrumbs/Breadcrumbs.tsx";
 import { BridgeConfigEditor } from "../../components/bridge/BridgeConfigEditor.tsx";
 import { BridgeDetails } from "../../components/bridge/BridgeDetails.tsx";
@@ -34,6 +35,7 @@ const MemoizedEndpointList = memo(EndpointList);
 export const BridgeDetailsPage = () => {
   const notifications = useNotifications();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { bridgeId } = useParams() as { bridgeId: string };
 
@@ -75,7 +77,7 @@ export const BridgeDetailsPage = () => {
       await updateBridge({ ...config, id: bridgeId })
         .then(() =>
           notifications.show({
-            message: "Update completed",
+            message: "更新完成",
             severity: "success",
           }),
         )
@@ -90,7 +92,7 @@ export const BridgeDetailsPage = () => {
   useEffect(() => {
     if (bridgeError) {
       notifications.show({
-        message: bridgeError.message ?? "Failed to load Bridge details",
+        message: bridgeError.message ?? "加载 Bridge 详情失败",
         severity: "error",
       });
     }
@@ -103,18 +105,27 @@ export const BridgeDetailsPage = () => {
   }, [devicesError, notifications]);
 
   if (!bridge && bridgeLoading) {
-    return "Loading";
+    return "加载中";
   }
 
   if (!bridge) {
-    return "Not found";
+    return "未找到";
   }
 
   return (
     <Stack spacing={4}>
+      {/* 返回按钮：回到 Bridge 列表 */}
+      <IconButton
+        onClick={() => navigate(navigation.bridges)}
+        aria-label="返回"
+        sx={{ alignSelf: "flex-start", p: 0 }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <Breadcrumbs
         items={[
-          { name: "Bridges", to: navigation.bridges },
+          { name: "Bridge 列表", to: navigation.bridges },
           { name: bridge.name, to: navigation.bridge(bridgeId) },
         ]}
       />
@@ -125,8 +136,8 @@ export const BridgeDetailsPage = () => {
         </Typography>
         <Box display="flex" alignItems="center">
           {/* 显式 Edit 按钮，打开 Drawer 编辑器，避免跳转离开详情页 */}
-          <Tooltip title="Edit bridge configuration">
-            <IconButton onClick={() => setEditOpen(true)} aria-label="Edit">
+          <Tooltip title="编辑 Bridge 配置">
+            <IconButton onClick={() => setEditOpen(true)} aria-label="编辑">
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -143,17 +154,17 @@ export const BridgeDetailsPage = () => {
           <Box display="flex" justifyContent="flex-end" alignItems="center">
             <Box display="flex" alignItems="center" gap={1}>
               {timer != null && (
-                <Tooltip title="New devices and changes on labels are discovered every 10 seconds.">
+                <Tooltip title="新设备与标签变更每 10 秒发现一次。">
                   <Typography variant="body2" color="textSecondary">
-                    Refreshing states in {timer - 1} seconds...
+                    {timer - 1} 秒后刷新状态...
                   </Typography>
                 </Tooltip>
               )}
               {/* 手动刷新按钮，立即触发并重置倒计时 */}
-              <Tooltip title="Refresh now">
+              <Tooltip title="立即刷新">
                 <IconButton
                   onClick={refreshDevices}
-                  aria-label="Refresh devices"
+                  aria-label="刷新设备"
                   size="small"
                 >
                   <RefreshIcon fontSize="small" />
@@ -188,7 +199,7 @@ export const BridgeDetailsPage = () => {
             onCancel={() => setEditOpen(false)}
           />
         ) : (
-          <Typography>Loading</Typography>
+          <Typography>加载中</Typography>
         )}
       </Drawer>
     </Stack>

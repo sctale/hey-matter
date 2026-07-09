@@ -84,7 +84,7 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
         return [
           {
             instancePath: "/port",
-            message: `Port is already used by bridge with id ${usedBy}`,
+            message: `端口已被 ID 为 ${usedBy} 的 Bridge 占用`,
           },
         ];
       }
@@ -108,14 +108,12 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
   return (
     <>
       <Alert severity="warning" variant="outlined">
-        Please consult{" "}
+        请查阅{" "}
         <Link href={navigation.faq.bridgeConfig} target="_blank">
-          the documentation
+          文档
         </Link>{" "}
-        for proper bridge configurations.{" "}
-        <strong>
-          Especially if you are using labels, see the "Labels" section.
-        </strong>
+        以了解正确的 Bridge 配置方式。{" "}
+        <strong>特别是使用标签（labels）时，请务必阅读"Labels"章节。</strong>
       </Alert>
 
       <Stack spacing={2}>
@@ -124,8 +122,8 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
             onClick={() => toggleEditor()}
             title={
               editorMode === BridgeEditorMode.FIELDS_EDITOR
-                ? "JSON editor"
-                : "Form editor"
+                ? "JSON 编辑器"
+                : "表单编辑器"
             }
           >
             {editorMode === BridgeEditorMode.FIELDS_EDITOR ? (
@@ -165,7 +163,7 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
               color="error"
               onClick={props.onCancel}
             >
-              Cancel
+              取消
             </Button>
           </Grid>
           <Grid
@@ -179,7 +177,7 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
               disabled={!isValid}
               onClick={saveAction}
             >
-              Save
+              保存
             </Button>
           </Grid>
         </Grid>

@@ -1,5 +1,7 @@
 import type { BridgeConfig } from "@hey-matter/common";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -54,7 +56,7 @@ export const CreateBridgePage = () => {
   const saveAction = async (config: BridgeConfig) => {
     await createBridge({ ...config })
       .then(() =>
-        notifications.show({ message: "Bridge saved", severity: "success" }),
+        notifications.show({ message: "Bridge 已保存", severity: "success" }),
       )
       .then(() => cancelAction())
       .catch((err: Error) =>
@@ -63,25 +65,33 @@ export const CreateBridgePage = () => {
   };
 
   if (!bridgeConfig || !usedPorts) {
-    return "Loading";
+    return "加载中";
   }
 
   return (
     <Stack spacing={4}>
+      {/* 返回按钮：回到上一页 */}
+      <IconButton
+        onClick={() => navigate(-1)}
+        aria-label="返回"
+        sx={{ alignSelf: "flex-start", p: 0 }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <Breadcrumbs
         items={[
-          { name: "Bridges", to: navigation.bridges },
-          { name: "Create New", to: navigation.createBridge },
+          { name: "Bridge 列表", to: navigation.bridges },
+          { name: "新建", to: navigation.createBridge },
         ]}
       />
 
       {showReuseBridgeHint && (
         <Alert severity="info" variant="outlined">
           <Typography>
-            Did you know that you can connect the same bridge with multiple
-            assistants?{" "}
+            您知道吗？同一个 Bridge 可以连接到多个语音助手。{" "}
             <Link href={navigation.faq.multiFabric} target="_blank">
-              Learn more.
+              了解更多。
             </Link>
           </Typography>
         </Alert>

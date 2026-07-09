@@ -5,6 +5,19 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-07-09
+
+### Added
+- **返回按钮**：Bridge 详情页、新建页、编辑页顶部均新增返回按钮，可快速回到上一页。
+- **Addon 图标**：HA Add-on 商店页面新增 icon.png 和 logo.png，显示项目图标。
+
+### Changed
+- **前端 UI 全面中文化**：pages（BridgeDetailsPage/CreateBridgePage/EditBridgePage/BridgesPage/BridgeMoreMenu）、components（BridgeConfigEditor/BridgeCard/BridgeDetails/EndpointList/EndpointState/EndpointIcon/FabricIcon/JsonEditor）、theme（AppFooter）共 15 个文件的 UI 文案改为中文。
+  - 术语策略：Bridge / Fabric 保留英文（Matter 协议核心术语）；Endpoint → 端点；Commissioning → 配对；Factory Reset → 恢复出厂设置。
+- **Addon 配置中文化**：config.yaml 的 description 改为中文，并补充配置项含义说明（app_log_level/disable_log_colors/mdns_network_interface）。
+- **认证修复**：config.yaml 新增 `homeassistant_api: true`，Supervisor 才会注入有效的 SUPERVISOR_TOKEN。
+- **HA Addon 仓库结构修复**：根目录新增 repository.yaml，addon 文件移至 hey-matter/ 子目录，符合 HA 官方 addon 仓库规范。
+
 ## [0.3.0] - 2026-07-09
 
 ### Added

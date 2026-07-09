@@ -4,7 +4,7 @@ import type { EntityOption } from "@hey-matter/common";
 export async function fetchEntities(): Promise<EntityOption[]> {
   const res = await fetch(`api/matter/entities?_s=${Date.now()}`);
   if (!res.ok) {
-    throw new Error(`Failed to load entities: ${res.statusText}`);
+    throw new Error(`加载实体失败：${res.statusText}`);
   }
   const json = await res.json();
   return json as EntityOption[];

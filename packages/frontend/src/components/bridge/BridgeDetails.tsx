@@ -98,7 +98,7 @@ export const BridgeDetails = ({ bridge }: BridgeDetailsProps) => {
         {/* 过滤器 */}
         <Box>
           <Typography variant="subtitle2" gutterBottom>
-            Filters
+            过滤器
           </Typography>
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             {bridge.filter.include.map((filter, idx) => (
@@ -153,7 +153,7 @@ const Pairing = (props: { bridge: BridgeDataWithMetadata }) => {
                 href={navigation.faq.multiFabric}
                 target="_blank"
               >
-                Commissioned
+                已配对
               </Typography>
             </Alert>
           </Box>
@@ -178,11 +178,11 @@ const Pairing = (props: { bridge: BridgeDataWithMetadata }) => {
 const BasicInfo = (props: { bridge: BridgeDataWithMetadata }) => {
   return (
     <Typography variant="subtitle2" component="div">
-      <div>ID: {props.bridge.id}</div>
-      <div>Name: {props.bridge.name}</div>
-      <div>Port: {props.bridge.port}</div>
+      <div>ID：{props.bridge.id}</div>
+      <div>名称：{props.bridge.name}</div>
+      <div>端口：{props.bridge.port}</div>
       <div>
-        <div>Fabrics:</div>
+        <div>Fabrics：</div>
         <div style={{ fontSize: "1.5em" }}>
           {props.bridge.commissioning?.fabrics && (
             <FabricList fabrics={props.bridge.commissioning.fabrics} />
@@ -199,12 +199,10 @@ const CommissioningInfo = (props: { bridge: BridgeDataWithMetadata }) => {
   }
   return (
     <Typography variant="subtitle2" component="div">
-      <div>Passcode: {props.bridge.commissioning.passcode}</div>
-      <div>Discriminator: {props.bridge.commissioning.discriminator}</div>
-      <div>
-        Manual Pairing Code: {props.bridge.commissioning.manualPairingCode}
-      </div>
-      <div>QR Pairing Code: {props.bridge.commissioning.qrPairingCode}</div>
+      <div>配对码：{props.bridge.commissioning.passcode}</div>
+      <div>鉴别码：{props.bridge.commissioning.discriminator}</div>
+      <div>手动配对码：{props.bridge.commissioning.manualPairingCode}</div>
+      <div>二维码配对码：{props.bridge.commissioning.qrPairingCode}</div>
     </Typography>
   );
 };

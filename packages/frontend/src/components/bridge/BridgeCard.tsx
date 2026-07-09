@@ -69,12 +69,12 @@ export const BridgeCard = ({ bridge }: BridgeCardProps) => {
               />
               <Metric
                 icon={<MemoryIcon fontSize="inherit" />}
-                label="Devices"
+                label="设备"
                 value={bridge.deviceCount}
               />
               <Metric
                 icon={<LanIcon fontSize="inherit" />}
-                label="Port"
+                label="端口"
                 value={bridge.port}
               />
             </Stack>

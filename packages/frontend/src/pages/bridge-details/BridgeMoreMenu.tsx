@@ -16,7 +16,7 @@ import { navigation } from "../../routes.tsx";
 
 export interface BridgeMoreMenuProps {
   bridge: string;
-  /** 若提供则"Edit"项调用此回调（用于父组件打开 Drawer），否则保持原路由跳转行为 */
+  /** 若提供则"编辑"项调用此回调（用于父组件打开 Drawer），否则保持原路由跳转行为 */
   onEdit?: () => void;
 }
 
@@ -48,13 +48,13 @@ export const BridgeMoreMenu = ({ bridge, onEdit }: BridgeMoreMenuProps) => {
     await factoryReset(bridge)
       .then(() =>
         notification.show({
-          message: "Bridge Reset successfully",
+          message: "Bridge 重置成功",
           severity: "success",
         }),
       )
       .catch((reason) =>
         notification.show({
-          message: `Failed to reset bridge: ${reason.toString()}`,
+          message: `重置 Bridge 失败：${reason.toString()}`,
           severity: "error",
         }),
       );
@@ -64,14 +64,14 @@ export const BridgeMoreMenu = ({ bridge, onEdit }: BridgeMoreMenuProps) => {
     await deleteBridge(bridge)
       .then(() =>
         notification.show({
-          message: "Bridge deleted successfully",
+          message: "Bridge 删除成功",
           severity: "success",
         }),
       )
       .then(() => navigate(navigation.bridges))
       .catch((reason) =>
         notification.show({
-          message: `Failed to delete bridge: ${reason.toString()}`,
+          message: `删除 Bridge 失败：${reason.toString()}`,
           severity: "error",
         }),
       );
@@ -87,20 +87,20 @@ export const BridgeMoreMenu = ({ bridge, onEdit }: BridgeMoreMenuProps) => {
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Edit</ListItemText>
+          <ListItemText>编辑</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleFactoryReset}>
           <ListItemIcon>
             <ResetIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Factory Reset</ListItemText>
+          <ListItemText>恢复出厂设置</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
+          <ListItemText>删除</ListItemText>
         </MenuItem>
       </Menu>
     </>

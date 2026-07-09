@@ -1,4 +1,6 @@
 import type { BridgeConfig } from "@hey-matter/common";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -42,7 +44,7 @@ export const EditBridgePage = () => {
     await updateBridge({ ...config, id: bridgeId })
       .then(() =>
         notifications.show({
-          message: "Update completed",
+          message: "更新完成",
           severity: "success",
         }),
       )
@@ -53,19 +55,28 @@ export const EditBridgePage = () => {
   };
 
   if (isLoading || !usedPorts) {
-    return "Loading";
+    return "加载中";
   }
   if (!bridge || !bridgeConfig) {
-    return "Not found";
+    return "未找到";
   }
 
   return (
     <Stack spacing={4}>
+      {/* 返回按钮：回到上一页 */}
+      <IconButton
+        onClick={() => navigate(-1)}
+        aria-label="返回"
+        sx={{ alignSelf: "flex-start", p: 0 }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <Breadcrumbs
         items={[
-          { name: "Bridges", to: navigation.bridges },
+          { name: "Bridge 列表", to: navigation.bridges },
           { name: bridge.name, to: navigation.bridge(bridgeId) },
-          { name: "Edit", to: navigation.editBridge(bridgeId) },
+          { name: "编辑", to: navigation.editBridge(bridgeId) },
         ]}
       />
 

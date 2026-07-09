@@ -11,7 +11,7 @@ const links: { name: string; url: string }[] = [
     url: navigation.githubRepository,
   },
   {
-    name: "Documentation",
+    name: "文档",
     url: navigation.documentation,
   },
 ];

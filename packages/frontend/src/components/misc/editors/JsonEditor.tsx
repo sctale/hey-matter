@@ -116,7 +116,7 @@ export const JsonEditor = (props: JsonEditorProps) => {
           }}
           onClick={() => prettify()}
         >
-          Prettify
+          格式化
         </Button>
       </Box>
       {errors.length > 0 && (

@@ -1,10 +1,10 @@
 # https://developers.home-assistant.io/docs/apps/configuration#app-configuration
 name: Hey Matter
-version: "0.3.0"
+version: "0.3.1"
 slug: hey_matter
 description: >-
-  Simulates bridges to publish your Home Assistant entities to any
-  Matter-compatible controller (Alexa, Apple Home, Google Home).
+  将 Home Assistant 的实体发布到任意 Matter 兼容控制器（Alexa、Apple Home、Google Home）的 Bridge 模拟器。
+  配置项说明：app_log_level=应用日志级别；disable_log_colors=是否禁用日志颜色；mdns_network_interface=指定 mDNS 网络接口（留空则自动选择）。
 url: "https://github.com/sctale/hey-matter/tree/main/hey-matter"
 arch:
   - armhf

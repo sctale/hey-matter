@@ -19,7 +19,7 @@ export const EndpointList = (props: EndpointListProps) => {
       <Grid size={{ xs: 12, md: 4 }}>
         <Box>
           <Typography variant="h6" component="span">
-            Endpoints
+            端点
           </Typography>
         </Box>
         <EndpointTreeView
