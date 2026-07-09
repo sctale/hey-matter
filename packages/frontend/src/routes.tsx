@@ -5,15 +5,14 @@ import { BridgesPage } from "./pages/bridges/BridgesPage.tsx";
 import { CreateBridgePage } from "./pages/edit-bridge/CreateBridgePage.tsx";
 import { EditBridgePage } from "./pages/edit-bridge/EditBridgePage.tsx";
 
-const documentationUrl =
-  "https://github.com/sctale/home-assistant-matter-hub#readme";
+const documentationUrl = "https://github.com/sctale/hey-matter#readme";
 export const navigation = {
   bridges: "/bridges",
   bridge: (bridgeId: string) => `/bridges/${bridgeId}`,
   createBridge: "/bridges/create",
   editBridge: (bridgeId: string) => `/bridges/${bridgeId}/edit`,
 
-  githubRepository: "https://github.com/sctale/home-assistant-matter-hub/",
+  githubRepository: "https://github.com/sctale/hey-matter/",
   documentation: documentationUrl,
   faq: {
     multiFabric: `${documentationUrl}/connect-multiple-fabrics`,

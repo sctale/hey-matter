@@ -136,10 +136,10 @@ Exposed via Express (`matterApi`):
 
 - [Matter Protocol Specification](https://csa-iot.org/all-solutions/matter/)
 - [Home Assistant Developer Docs](https://developers.home-assistant.io/)
-- [Hey Matter User Documentation](https://github.com/sctale/home-assistant-matter-hub#readme)
+- [Hey Matter User Documentation](https://github.com/sctale/hey-matter#readme)
 
 ---
 
 ## Contact & Maintainer
 
-See [GitHub Discussions](https://github.com/sctale/home-assistant-matter-hub/discussions/825) for handover or maintainer inquiries.
+See [GitHub Discussions](https://github.com/sctale/hey-matter/discussions/825) for handover or maintainer inquiries.

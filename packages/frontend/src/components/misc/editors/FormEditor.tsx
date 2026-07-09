@@ -9,7 +9,7 @@ import type {
 } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import type { JSONSchema7 } from "json-schema";
-import { useCallback, type ComponentType } from "react";
+import { type ComponentType, useCallback } from "react";
 import type { ValidationError } from "./validation-error.ts";
 
 const Form = withTheme(Theme);

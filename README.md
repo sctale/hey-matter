@@ -11,7 +11,7 @@
 > [`t0bst4r/home-assistant-matter-hub`](https://github.com/t0bst4r/home-assistant-matter-hub).
 >
 > The upstream project stopped maintenance in January 2026. This fork
-> (`sctale/home-assistant-matter-hub`) continues development under the
+> (`sctale/hey-matter`) continues development under the
 > **Hey Matter** name, with frontend UX improvements and ongoing fixes.
 >
 > The npm package, CLI binary, environment prefix (`HM_`) and default
@@ -31,7 +31,7 @@ of port forwarding etc.
 
 ## Documentation
 
-Please see the [documentation](https://github.com/sctale/home-assistant-matter-hub#readme) for installation instructions,
+Please see the [documentation](https://github.com/sctale/hey-matter#readme) for installation instructions,
 known issues, limitations and guides.
 
 ---

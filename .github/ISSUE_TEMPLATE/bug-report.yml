@@ -40,7 +40,7 @@ body:
     attributes:
       label: "Documentation & Issues"
       options:
-        - label: I have reviewed the [documentation](https://github.com/sctale/home-assistant-matter-hub#readme/) and the linked troubleshooting guide.
+        - label: I have reviewed the [documentation](https://github.com/sctale/hey-matter#readme/) and the linked troubleshooting guide.
           required: true
-        - label: I have searched the [issues](https://github.com/sctale/home-assistant-matter-hub/issues) for a similar problem.
+        - label: I have searched the [issues](https://github.com/sctale/hey-matter/issues) for a similar problem.
           required: true

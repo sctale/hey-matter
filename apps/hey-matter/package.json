@@ -31,10 +31,10 @@
     "smart-home"
   ],
   "bugs": {
-    "url": "https://github.com/sctale/home-assistant-matter-hub/issues"
+    "url": "https://github.com/sctale/hey-matter/issues"
   },
   "license": "Apache-2.0",
-  "repository": "github:sctale/home-assistant-matter-hub",
+  "repository": "github:sctale/hey-matter",
   "scripts": {
     "cleanup": "npx rimraf node_modules dist pack LICENSE README.md",
     "build": "node build.js",

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this fork (`sctale/home-assistant-matter-hub`, product name **Hey Matter**) will be documented in this file.
+All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter**) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **BridgeCard 卡片优化**：左侧增加状态色竖边（starting=蓝/running=绿/stopped=橙/failed=红），副信息（Fabrics/Devices/Port）改为图标化展示，hover 时阴影提升。
 - **BridgeDetails 信息分层**：详情页内容用 Divider 分隔为「基本信息与配对」「过滤器」两块，外层 Paper 改为 outlined 样式，层次更清晰。
+- **GitHub 仓库改名**：`sctale/home-assistant-matter-hub` → `sctale/hey-matter`，所有代码与文档中的仓库/bugs/issues URL 同步更新。
 
 ## [0.2.0] - 2026-07-09
 
