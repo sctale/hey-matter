@@ -1,7 +1,4 @@
-import {
-  VacuumDeviceFeature,
-  VacuumState,
-} from "@hey-matter/common";
+import { VacuumDeviceFeature, VacuumState } from "@hey-matter/common";
 import { RvcOperationalState } from "@matter/main/clusters";
 import { testBit } from "../../../../../utils/test-bit.js";
 import { HomeAssistantEntityBehavior } from "../../../../behaviors/home-assistant-entity-behavior.js";

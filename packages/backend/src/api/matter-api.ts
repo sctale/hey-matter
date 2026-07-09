@@ -1,20 +1,43 @@
 import {
   type CreateBridgeRequest,
   createBridgeRequestSchema,
+  type EntityOption,
   type UpdateBridgeRequest,
   updateBridgeRequestSchema,
 } from "@hey-matter/common";
 import { Ajv } from "ajv";
 import express from "express";
 import type { BridgeService } from "../services/bridges/bridge-service.js";
+import type { HomeAssistantRegistry } from "../services/home-assistant/home-assistant-registry.js";
 import { endpointToJson } from "../utils/json/endpoint-to-json.js";
 
 const ajv = new Ajv();
 
-export function matterApi(bridgeService: BridgeService): express.Router {
+export function matterApi(
+  bridgeService: BridgeService,
+  registry: HomeAssistantRegistry,
+): express.Router {
   const router = express.Router();
   router.get("/", (_, res) => {
     res.status(200).json({});
+  });
+
+  // 暴露 HA 全量实体列表（含 friendly_name），供前端 filter 配置自动补全使用
+  router.get("/entities", (_, res) => {
+    const entities: EntityOption[] = Object.values(registry.entities).map(
+      (e) => ({
+        entity_id: e.entity_id,
+        friendly_name: registry.states[e.entity_id]?.attributes?.friendly_name,
+        domain: e.entity_id.split(".")[0],
+        platform: e.platform,
+        entity_category: e.entity_category as string | undefined,
+        labels: e.labels ?? [],
+        area_id: e.area_id,
+        disabled_by: e.disabled_by as string | undefined,
+        hidden_by: e.hidden_by as string | undefined,
+      }),
+    );
+    res.status(200).json(entities);
   });
 
   router.get("/bridges", async (_, res) => {

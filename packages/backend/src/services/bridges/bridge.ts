@@ -1,7 +1,4 @@
-import {
-  BridgeStatus,
-  type UpdateBridgeRequest,
-} from "@hey-matter/common";
+import { BridgeStatus, type UpdateBridgeRequest } from "@hey-matter/common";
 import type { Environment, Logger } from "@matter/general";
 import type { LoggerService } from "../../core/app/logger.js";
 import { BridgeServerNode } from "../../matter/endpoints/bridge-server-node.js";

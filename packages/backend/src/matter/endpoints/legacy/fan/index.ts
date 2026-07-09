@@ -1,7 +1,4 @@
-import {
-  type FanDeviceAttributes,
-  FanDeviceFeature,
-} from "@hey-matter/common";
+import { type FanDeviceAttributes, FanDeviceFeature } from "@hey-matter/common";
 import type { EndpointType } from "@matter/main";
 import type { FanControl } from "@matter/main/clusters";
 import { FanDevice as Device } from "@matter/main/devices";

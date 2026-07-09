@@ -5,6 +5,19 @@ All notable changes to this fork (`sctale/home-assistant-matter-hub`, product na
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-07-09
+
+### Added
+- **实体自动补全**：bridge filter 配置的 value 字段由纯文本输入改为 Autocomplete 自动补全。可搜索实体的友好名称（friendly_name）选中实体，无需手动输入 entity ID。
+  - 根据 matcher type 动态提供候选：`domain`/`platform`/`label`/`area`/`entity_category` 提供去重后的候选值列表；`pattern` 类型提供全量实体（显示友好名称，选中填入 entity ID）。
+  - `pattern` 类型支持 `freeSolo`，可手动输入通配 pattern（如 `light.*`），保留通配能力。
+  - 新增后端 `GET /api/matter/entities` 端点暴露 HA 全量实体列表（含 friendly_name）。
+- **filter Chip 友好名称显示**：bridge 详情页的过滤器 Chip 在 `pattern` 类型且为完整 entity ID 时，反查并显示实体的友好名称，而非裸 ID。
+
+### Changed
+- **BridgeCard 卡片优化**：左侧增加状态色竖边（starting=蓝/running=绿/stopped=橙/failed=红），副信息（Fabrics/Devices/Port）改为图标化展示，hover 时阴影提升。
+- **BridgeDetails 信息分层**：详情页内容用 Divider 分隔为「基本信息与配对」「过滤器」两块，外层 Paper 改为 outlined 样式，层次更清晰。
+
 ## [0.2.0] - 2026-07-09
 
 ### Changed - BREAKING (Rename)

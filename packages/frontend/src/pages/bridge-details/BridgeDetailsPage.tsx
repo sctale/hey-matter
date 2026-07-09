@@ -16,7 +16,11 @@ import { BridgeStatusHint } from "../../components/bridge/BridgeStatusHint.tsx";
 import { BridgeStatusIcon } from "../../components/bridge/BridgeStatusIcon.tsx";
 import { EndpointList } from "../../components/endpoints/EndpointList.tsx";
 import { useNotifications } from "../../components/notifications/use-notifications.ts";
-import { useBridge, useUpdateBridge, useUsedPorts } from "../../hooks/data/bridges.ts";
+import {
+  useBridge,
+  useUpdateBridge,
+  useUsedPorts,
+} from "../../hooks/data/bridges.ts";
 import { useDevices } from "../../hooks/data/devices.ts";
 import { useTimer } from "../../hooks/timer.ts";
 import { navigation } from "../../routes.tsx";

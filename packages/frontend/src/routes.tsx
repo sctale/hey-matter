@@ -5,7 +5,8 @@ import { BridgesPage } from "./pages/bridges/BridgesPage.tsx";
 import { CreateBridgePage } from "./pages/edit-bridge/CreateBridgePage.tsx";
 import { EditBridgePage } from "./pages/edit-bridge/EditBridgePage.tsx";
 
-const documentationUrl = "https://github.com/sctale/home-assistant-matter-hub#readme";
+const documentationUrl =
+  "https://github.com/sctale/home-assistant-matter-hub#readme";
 export const navigation = {
   bridges: "/bridges",
   bridge: (bridgeId: string) => `/bridges/${bridgeId}`,

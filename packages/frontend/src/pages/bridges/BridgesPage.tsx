@@ -25,9 +25,7 @@ export const BridgesPage = () => {
   const { content: bridges, isLoading, error: bridgeError } = useBridges();
 
   // 定期自动刷新 bridges 列表，保证新增/删除/状态变化及时反映
-  useTimer(BRIDGE_LIST_REFRESH_INTERVAL_SECONDS, () =>
-    dispatch(loadBridges()),
-  );
+  useTimer(BRIDGE_LIST_REFRESH_INTERVAL_SECONDS, () => dispatch(loadBridges()));
 
   useEffect(() => {
     if (bridgeError) {

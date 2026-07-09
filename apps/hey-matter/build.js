@@ -34,8 +34,9 @@ fs.cpSync(
  * @returns {string}
  */
 function packageDir(packageName, directory) {
+  // 模块 specifier 必须用正斜杠，path.join 在 Windows 会生成反斜杠导致 resolve 失败
   const packageJsonPath = fileURLToPath(
-    import.meta.resolve(path.join(packageName, "package.json")),
+    import.meta.resolve(`${packageName}/package.json`),
   );
   const packagePath = path.dirname(packageJsonPath);
   return path.join(packagePath, directory);

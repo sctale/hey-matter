@@ -5,10 +5,11 @@ import type {
   FormValidation,
   RJSFValidationError,
   UiSchema,
+  WidgetProps,
 } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import type { JSONSchema7 } from "json-schema";
-import { useCallback } from "react";
+import { useCallback, type ComponentType } from "react";
 import type { ValidationError } from "./validation-error.ts";
 
 const Form = withTheme(Theme);
@@ -19,6 +20,10 @@ export interface FormEditorProps {
   value: object;
   onChange: (value: object, isValid: boolean) => void;
   customValidate?: (value: object | undefined) => ValidationError[];
+  /** 自定义 widget 注册表，键为 ui:widget 名称 */
+  widgets?: Record<string, ComponentType<WidgetProps>>;
+  /** 传递给 rjsf Form 的上下文，widget 可通过 props.formContext 读取 */
+  formContext?: Record<string, unknown>;
 }
 
 export const FormEditor = (props: FormEditorProps) => {
@@ -56,6 +61,8 @@ export const FormEditor = (props: FormEditorProps) => {
       liveValidate="onChange"
       customValidate={customValidator}
       showErrorList={false}
+      widgets={props.widgets}
+      formContext={props.formContext}
       onChange={(data) => onChange(data.formData, data.errors)}
     />
   );

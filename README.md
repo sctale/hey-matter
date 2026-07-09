@@ -54,4 +54,18 @@ This fork enhances the web UI experience with the following improvements:
 ### 4. Auto-Refreshing Bridge List
 - The bridges list page now **auto-refreshes every 30 seconds**, so newly created or deleted bridges appear without a manual browser refresh.
 
+### 5. Entity Autocomplete for Filter Configuration
+- When configuring bridge filters, the **value field is now an Autocomplete** instead of a plain text input.
+- Search and select entities by their **friendly name** (e.g. "客厅灯") instead of typing raw entity IDs (e.g. `light.living_room`).
+- Candidate options adapt to the matcher type: `domain`/`platform`/`label`/`area`/`entity_category` show deduplicated candidate values; `pattern` shows the full entity list with friendly names.
+- The `pattern` type supports free-text input, so wildcard patterns like `light.*` can still be entered manually.
+
+### 6. Bridge Card Status Color Bar & Icon Metrics
+- Each bridge card now displays a **left status color bar** (blue=starting, green=running, orange=stopped, red=failed) for at-a-glance status recognition.
+- Secondary metrics (Fabrics / Devices / Port) are now **iconified** and the card elevates on hover for better visual feedback.
+
+### 7. Filter Chip Friendly Names & Layered Details
+- On the bridge details page, filter chips now show the **entity friendly name** (instead of the raw entity ID) when the matcher is a `pattern` matching a full entity ID.
+- The details panel is now **layered with dividers** (basic info / commissioning vs. filters) using an outlined card style for clearer information hierarchy.
+
 ---

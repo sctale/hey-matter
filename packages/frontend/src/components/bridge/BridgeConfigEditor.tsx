@@ -1,7 +1,4 @@
-import {
-  type BridgeConfig,
-  bridgeConfigSchema,
-} from "@hey-matter/common";
+import { type BridgeConfig, bridgeConfigSchema } from "@hey-matter/common";
 import { LibraryBooks, TextFields } from "@mui/icons-material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
@@ -9,10 +6,12 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useEntities } from "../../hooks/data/entities.ts";
 import { navigation } from "../../routes.tsx";
 import { FormEditor } from "../misc/editors/FormEditor";
 import { JsonEditor } from "../misc/editors/JsonEditor";
+import { MatcherValueWidget } from "../misc/editors/MatcherValueWidget.tsx";
 import type { ValidationError } from "../misc/editors/validation-error.ts";
 
 enum BridgeEditorMode {
@@ -42,6 +41,37 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
 
   const [config, setConfig] = useState<object | undefined>(props.bridge);
   const [isValid, setIsValid] = useState<boolean>(true);
+
+  // 实体候选数据（用于 filter matcher value 自动补全）
+  const { data: entities } = useEntities();
+
+  // 指定 filter include/exclude 数组中每一项的 value 字段使用自定义 widget
+  const uiSchema = useMemo(
+    () => ({
+      filter: {
+        include: {
+          items: {
+            value: { "ui:widget": "matcherValue" },
+          },
+        },
+        exclude: {
+          items: {
+            value: { "ui:widget": "matcherValue" },
+          },
+        },
+      },
+    }),
+    [],
+  );
+
+  // 注册自定义 widget
+  const widgets = useMemo(() => ({ matcherValue: MatcherValueWidget }), []);
+
+  // 传给 widget 的上下文：实体列表 + 当前 formData（widget 据此反查 sibling type）
+  const formContext = useMemo(
+    () => ({ entities, formData: config }),
+    [entities, config],
+  );
 
   const validatePort = useCallback(
     (value: object | undefined): ValidationError[] => {
@@ -112,6 +142,9 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
             onChange={onChange}
             schema={bridgeConfigSchema}
             customValidate={validatePort}
+            uiSchema={uiSchema}
+            widgets={widgets}
+            formContext={formContext}
           />
         )}
 
