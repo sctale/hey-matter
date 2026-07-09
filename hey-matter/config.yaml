@@ -17,6 +17,7 @@ panel_icon: mdi:bridge
 panel_title: Hey Matter
 startup: services
 boot: auto
+homeassistant_api: true
 map:
   - config:rw
 options:
