@@ -1,0 +1,33 @@
+# Home Assistant Addon 配置文件
+# HA 在添加 addon 仓库时会扫描根目录的 config.yaml 来识别合法的 addon 仓库
+name: Hey Matter
+version: "0.3.0"
+slug: hey_matter
+description: >-
+  Simulates bridges to publish your Home Assistant entities to any
+  Matter-compatible controller (Alexa, Apple Home, Google Home).
+arch:
+  - armhf
+  - aarch64
+  - i386
+  - amd64
+init: false
+ingress: true
+panel_icon: mdi:bridge
+panel_title: Hey Matter
+startup: services
+boot: auto
+ports:
+  8381/tcp: null
+ports_description:
+  8381/tcp: Web UI port (not required when using ingress)
+map:
+  - config:rw
+options:
+  app_log_level: info
+  disable_log_colors: false
+  mdns_network_interface: ""
+schema:
+  app_log_level: list(debug|info|warning|error)
+  disable_log_colors: bool
+  mdns_network_interface: str?
