@@ -27,12 +27,18 @@ export const EditBridgePage = () => {
     if (isLoading || !bridge) {
       return undefined;
     }
+    // 防御性处理：后端可能返回 null，规整为符合 schema 的默认值
+    const filter = bridge.filter ?? { include: [], exclude: [] };
+    const featureFlags = bridge.featureFlags ?? {};
     return {
       name: bridge.name,
       port: bridge.port,
       countryCode: bridge.countryCode,
-      filter: bridge.filter,
-      featureFlags: bridge.featureFlags,
+      filter: {
+        include: filter.include ?? [],
+        exclude: filter.exclude ?? [],
+      },
+      featureFlags,
     };
   }, [isLoading, bridge]);
 

@@ -10,10 +10,69 @@ import type {
 } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import type { JSONSchema7 } from "json-schema";
-import { type ComponentType, useCallback } from "react";
+import { type ComponentType, useCallback, useMemo } from "react";
 import type { ValidationError } from "./validation-error.ts";
 
 const Form = withTheme(Theme);
+
+/**
+ * 深度规整 formData：根据 schema 把声明为 array 的字段的 null/undefined 值替换为 []，
+ * 把声明为 object 的字段的 null 值替换为 {}（或 schema.default）。
+ *
+ * 背景：RJSF 6.x 的 mergeDefaultsWithFormData 对 null 的处理有缺陷——
+ *   null && typeof null === 'object'  =>  false
+ * 导致 null 值绕过默认值合并，被原样保留，最终在 ArrayField 中触发
+ *   null.map(...)  =>  TypeError: t.map is not a function
+ *
+ * 在传入 RJSF Form 之前调用此函数，可彻底规避该崩溃链。
+ */
+function sanitizeFormData(
+  formData: unknown,
+  schema: JSONSchema7 | undefined,
+): unknown {
+  // formData 本身为 null/undefined：用 schema.default 兜底，否则按类型给空值
+  if (formData == null) {
+    if (schema?.default !== undefined) return schema.default;
+    if (schema?.type === "array") return [];
+    if (schema?.type === "object") return {};
+    return formData;
+  }
+  // 基本类型直接返回
+  if (typeof formData !== "object") return formData;
+  // 数组：逐项递归规整（如有 items schema）
+  if (Array.isArray(formData)) {
+    const itemSchema =
+      schema?.items && !Array.isArray(schema.items) && typeof schema.items === "object"
+        ? (schema.items as JSONSchema7)
+        : undefined;
+    return itemSchema
+      ? formData.map((item) => sanitizeFormData(item, itemSchema))
+      : formData;
+  }
+  // 对象：遍历 schema.properties，逐字段规整
+  const result: Record<string, unknown> = { ...(formData as Record<string, unknown>) };
+  const props = schema?.properties;
+  if (props && typeof props === "object") {
+    for (const [key, subSchemaRaw] of Object.entries(props)) {
+      if (!subSchemaRaw || typeof subSchemaRaw !== "object") continue;
+      const subSchema = subSchemaRaw as JSONSchema7;
+      const childValue = result[key];
+      // schema 声明为 array 但值为 null/undefined → 填充 default 或 []
+      if (subSchema.type === "array" && childValue == null) {
+        result[key] = subSchema.default ?? [];
+      }
+      // schema 声明为 object 且值非 null → 递归规整
+      else if (subSchema.type === "object" && childValue != null) {
+        result[key] = sanitizeFormData(childValue, subSchema);
+      }
+      // schema 声明为 object 但值为 null → 填充 default 或 {}
+      else if (subSchema.type === "object" && childValue == null) {
+        result[key] = subSchema.default ?? {};
+      }
+    }
+  }
+  return result;
+}
 
 // RJSF 按钮文本中文化映射
 const zhTranslations: Partial<Record<TranslatableString, string>> = {
@@ -87,12 +146,18 @@ export const FormEditor = (props: FormEditorProps) => {
     [customValidate],
   );
 
+  // 在传入 RJSF 之前深度规整 formData，确保数组字段不为 null，规避 t.map 崩溃
+  const sanitizedValue = useMemo(
+    () => sanitizeFormData(props.value, props.schema) as object,
+    [props.value, props.schema],
+  );
+
   return (
     <Form
       schema={props.schema}
       uiSchema={props.uiSchema}
       validator={validator}
-      formData={props.value}
+      formData={sanitizedValue}
       liveValidate="onChange"
       customValidate={customValidator}
       showErrorList={false}

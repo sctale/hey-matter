@@ -5,6 +5,13 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.8] - 2026-07-10
+
+### Fixed
+- **彻底修复 Bridge 页面崩溃 `t.map is not a function`**：v0.3.7 仅在 schema 层面添加 `default: []`，但 RJSF 6.x 的 `mergeDefaultsWithFormData` 对 `null` 值有缺陷——`null && typeof null === 'object'` 为 `false`，导致 `null` 绕过默认值合并被原样保留，最终在 `ArrayField` 中触发 `null.map()` 崩溃。本次修复：
+  - 在 `FormEditor.tsx` 中新增 `sanitizeFormData` 深度规整函数，在传入 RJSF 之前根据 schema 把所有声明为 `array` 的字段的 `null`/`undefined` 值替换为 `[]`，把声明为 `object` 的字段的 `null` 值替换为 `{}`（或 schema.default），彻底规避崩溃链。
+  - 在 `EditBridgePage.tsx` 中对后端返回的 `bridge.filter`/`bridge.featureFlags` 做防御性处理，避免 `null` 值传入表单。
+
 ## [0.3.7] - 2026-07-10
 
 ### Fixed
