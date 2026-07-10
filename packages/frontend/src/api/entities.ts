@@ -16,15 +16,21 @@ interface EntitiesResponse {
 
 /**
  * 获取 HA 全量实体列表（含 friendly_name），供 filter 配置自动补全使用。
- * 使用 AbortController 设置 15 秒超时，超时抛出 Error("请求超时，请重试")。
+ * 支持传入外部 AbortSignal，卸载或重试时可取消在途请求。
+ * 内部仍保留 15 秒超时保护，超时抛出 Error("请求超时，请重试")。
  * 兼容后端新响应格式 { ready, reason?, entities }，返回结构化对象而非裸数组。
  */
-export async function fetchEntities(): Promise<FetchEntitiesResult> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15_000);
+export async function fetchEntities(
+  signal?: AbortSignal,
+): Promise<FetchEntitiesResult> {
+  const timeoutController = new AbortController();
+  const timeoutId = setTimeout(() => timeoutController.abort(), 15_000);
+  const effectiveSignal = signal
+    ? AbortSignal.any([signal, timeoutController.signal])
+    : timeoutController.signal;
   try {
     const res = await fetch(`api/matter/entities?_s=${Date.now()}`, {
-      signal: controller.signal,
+      signal: effectiveSignal,
     });
     if (!res.ok) {
       throw new Error(`加载实体失败：${res.statusText}`);

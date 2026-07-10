@@ -39,11 +39,19 @@ runs:
         echo "dockertag=$DOCKER_IMAGE" >> "$GITHUB_OUTPUT" 
         echo "context=$CONTEXT" >> "$GITHUB_OUTPUT"
 
+    - name: Copy package.tgz to Docker context
+      shell: bash
+      run: |
+        CONTEXT="${{ steps.meta.outputs.context }}"
+        if [ ! -f "${CONTEXT}/package.tgz" ]; then
+          cp apps/hey-matter/package.tgz "${CONTEXT}/package.tgz"
+        fi
+
     - name: Build Docker image
       uses: docker/build-push-action@v6
       with:
         push: ${{inputs.push}}
-        platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+        platforms: linux/amd64,linux/arm64
         context: ${{ steps.meta.outputs.context }}
         file: ${{inputs.dockerfile}}
         build-args: |

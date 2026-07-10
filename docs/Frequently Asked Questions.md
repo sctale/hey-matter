@@ -8,17 +8,17 @@ Please follow the [troubleshooting guide](./Guides/Connectivity%20Issues.md).
 
 Please follow the [multi-fabric guide](./Guides/Connect%20Multiple%20Fabrics.md).
 
-## I'm running HAMH as a docker image and want to access it via a reverse proxy
+## I'm running Hey Matter as a docker image and want to access it via a reverse proxy
 
 Please follow the [reverse proxy guide](./Guides/Reverse%20Proxy.md).
 
-## Changes on names and labels in Home Assistant have no effect in HAMH
+## Changes on names and labels in Home Assistant have no effect in Hey Matter
 
 When performing changes on entities, like adding or removing a label or renaming your entity, you need to reload the
 affected bridge for the changes to take effect. This happens automatically every 30 seconds, but you can enforce it by
 editing the bridge (even without making changes), or when restarting the whole addon.
 
-## I added a label to my entities, but HAMH won't find any device
+## I added a label to my entities, but Hey Matter won't find any device
 
 - Labels and areas in Home Assistant are technically represented by their "slugs".
 - Slugs are technical identifiers used in the background.

@@ -22,17 +22,18 @@ export function useEntities(): UseEntitiesState {
   const [error, setError] = useState<Error | null>(null);
   const [ready, setReady] = useState(false);
   const [reason, setReason] = useState<string | undefined>(undefined);
+  const [retryToken, setRetryToken] = useState(0);
 
   // 用自增 token 跟踪最新一次加载，避免旧请求覆盖新状态（卸载或 retry 后失效）
   const loadIdRef = useRef(0);
 
-  // 可复用的加载逻辑，retry 时调用
-  const load = useCallback(() => {
+  // 可复用的加载逻辑，传入 AbortSignal 以支持取消
+  const load = useCallback((signal: AbortSignal) => {
     const id = ++loadIdRef.current;
     setIsLoading(true);
     // retry 时清除 error 重新加载
     setError(null);
-    fetchEntities()
+    fetchEntities(signal)
       .then((result) => {
         if (id !== loadIdRef.current) return;
         setData(result.entities);
@@ -52,16 +53,20 @@ export function useEntities(): UseEntitiesState {
   }, []);
 
   useEffect(() => {
-    load();
+    const controller = new AbortController();
+    load(controller.signal);
     return () => {
-      // 卸载时使在途请求失效
+      // 卸载时取消在途请求并递增 token 使旧回调失效
       loadIdRef.current++;
+      controller.abort();
     };
-  }, [load]);
+    // retryToken 变化时重新创建 AbortController 并加载
+  }, [load, retryToken]);
 
   const retry = useCallback(() => {
-    load();
-  }, [load]);
+    // 触发 useEffect 重新执行，从而创建新的 AbortController
+    setRetryToken((token) => token + 1);
+  }, []);
 
   return { data, isLoading, error, ready, reason, retry };
 }

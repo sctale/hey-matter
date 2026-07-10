@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import type { Logger } from "@matter/general";
 import type {
   HomeAssistantDeviceRegistry,
   HomeAssistantEntityRegistry,
@@ -6,6 +7,7 @@ import type {
 } from "@hey-matter/common";
 import { getStates } from "home-assistant-js-websocket";
 import { fromPairs, keyBy, keys, uniq, values } from "lodash-es";
+import type { LoggerService } from "../../core/app/logger.js";
 import { Service } from "../../core/ioc/service.js";
 import { getDeviceRegistry, getRegistry } from "./api/get-registry.js";
 import type {
@@ -19,6 +21,7 @@ export type HomeAssistantStates = Record<string, HomeAssistantEntityState>;
 
 export class HomeAssistantRegistry extends Service {
   private autoRefresh?: NodeJS.Timeout;
+  private readonly log: Logger;
 
   private _devices: HomeAssistantDevices = {};
   get devices() {
@@ -36,10 +39,12 @@ export class HomeAssistantRegistry extends Service {
   }
 
   constructor(
+    logger: LoggerService,
     private readonly client: HomeAssistantClient,
     private readonly options: HomeAssistantClientProps,
   ) {
     super("HomeAssistantRegistry");
+    this.log = logger.get(this);
   }
 
   protected override async initialize(): Promise<void> {
@@ -54,7 +59,13 @@ export class HomeAssistantRegistry extends Service {
     this.disableAutoRefresh();
 
     this.autoRefresh = setInterval(async () => {
-      await this.reload();
+      try {
+        await this.reload();
+      } catch (err) {
+        // 自动刷新失败只记录日志，不抛出，避免中断后续刷新周期
+        this.log.error("自动刷新 Home Assistant 注册表失败", err);
+        return;
+      }
       onRefresh();
     }, this.options.refreshInterval * 1000);
   }

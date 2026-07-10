@@ -17,13 +17,16 @@ RUN corepack enable
 ENV SUPERVISOR_TOKEN=""
 VOLUME /config
 
-COPY addon.docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY --chmod=755 addon.docker-entrypoint.sh /docker-entrypoint.sh
 
 ARG PACKAGE_VERSION="unknown"
 LABEL \
+  org.opencontainers.image.title="Home Assistant App: Hey Matter" \
+  org.opencontainers.image.description="将 Home Assistant 的实体发布到任意 Matter 兼容控制器的 Bridge 模拟器" \
+  org.opencontainers.image.source="https://github.com/sctale/hey-matter" \
+  org.opencontainers.image.licenses="Apache-2.0" \
   io.hass.version="$PACKAGE_VERSION" \
-  io.hass.type="addon" \
+  io.hass.type="app" \
   io.hass.arch="armhf|aarch64|i386|amd64"
 
 RUN mkdir /install
@@ -31,4 +34,4 @@ COPY package.tgz /install/package.tgz
 RUN npm install -g /install/package.tgz
 RUN rm -rf /install
 
-CMD /docker-entrypoint.sh
+CMD ["/docker-entrypoint.sh"]

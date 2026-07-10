@@ -11,6 +11,7 @@ import { accessLogger } from "./access-log.js";
 import { matterApi } from "./matter-api.js";
 import { supportIngress, supportProxyLocation } from "./proxy-support.js";
 import { webUi } from "./web-ui.js";
+import type { NextFunction, Request, Response } from "express";
 
 export interface WebApiProps {
   readonly port: number;
@@ -58,7 +59,7 @@ export class WebApi extends Service {
         basicAuth({
           users: { [this.props.auth.username]: this.props.auth.password },
           challenge: true,
-          realm: "Home Assistant Matter Hub",
+          realm: "Hey Matter",
         }),
       );
       this.log.info("Basic authentication enabled");
@@ -81,6 +82,12 @@ export class WebApi extends Service {
       .use(...middlewares)
       .use("/api", api)
       .use(webUi(this.props.webUiDist));
+
+    // 全局错误处理：捕获所有路由中未处理的异常，避免进程崩溃
+    this.app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+      this.log.error("HTTP 请求处理失败", err);
+      res.status(500).json({ error: "服务器内部错误" });
+    });
   }
 
   override async dispose() {

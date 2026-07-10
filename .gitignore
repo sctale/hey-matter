@@ -25,6 +25,7 @@ RELEASE_CHANNEL
 dist/
 docs/_build/
 apps/hey-matter/package.tgz
+hey-matter/package.tgz
 apps/hey-matter/README.md
 apps/hey-matter/LICENSE
 

@@ -58,6 +58,7 @@ export class AppEnvironment extends EnvironmentBase {
     this.set(
       HomeAssistantRegistry,
       new HomeAssistantRegistry(
+        logger,
         await this.load(HomeAssistantClient),
         this.options.homeAssistant,
       ),

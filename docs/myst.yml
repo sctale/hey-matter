@@ -24,7 +24,7 @@ project:
         - file: "Developer Documentation/behaviors.md"
 site:
   template: book-theme
-  title: Home-Assistant-Matter-Hub
+  title: Hey Matter
   options:
     favicon: assets/hamh-logo-small.png
     logo: assets/hamh-logo-large.png

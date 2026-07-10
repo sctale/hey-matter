@@ -8,7 +8,7 @@ import tsc from "typescript";
 const src = path.resolve(import.meta.dirname, "src");
 const dist = path.resolve(import.meta.dirname, "dist");
 const tsconfig = JSON.parse(
-  fs.readFileSync("./tsconfig.json", { encoding: "utf8" }),
+  fs.readFileSync(path.resolve(import.meta.dirname, "tsconfig.json"), { encoding: "utf8" }),
 );
 
 await rimraf(dist);
@@ -22,7 +22,7 @@ async function buildBackend() {
     platform: "node",
     outdir: path.resolve(dist),
     treeShaking: true,
-    target: "node20",
+    target: "node22",
     format: "esm",
     minify: false,
     sourcemap: "linked",

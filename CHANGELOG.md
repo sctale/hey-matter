@@ -5,6 +5,31 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2026-07-10
+
+### Changed
+- **HA Addon 官方合规化改造**：
+  - `hey-matter/config.yaml`：`arch` 精简为 `[aarch64, amd64]`；`map` 改为新格式 `app_config`；新增 `image: ghcr.io/sctale/hey-matter-addon` 预构建镜像字段；新增 `stage: stable`、`timeout: 30`；`ingress_port` 改为 `0` 使用动态端口。
+  - `hey-matter/Dockerfile` 与 `apps/hey-matter/addon.Dockerfile`：补充 OCI labels；`io.hass.type` 改为 `app`；CMD 改为 exec 形式；合并 `chmod` 层。
+- **构建与发布流程优化**：
+  - `hey-matter/package.tgz` 从 git 跟踪中移除并加入 `.gitignore`。
+  - `apps/hey-matter/build.js` 自动同步 `package.json` 版本到 `hey-matter/config.yaml`。
+  - 修复 CI workflow 中不存在的 `actions/checkout@v6` / `setup-node@v6`，降级到 v4；移除多余的 `npm install -g npm@latest`；Docker matrix 简化为 `linux/amd64` 和 `linux/arm64`。
+  - 后端 `packages/backend/bundle.js` target 改为 `node22`，tsconfig 路径基于 `import.meta.dirname`。
+- **后端稳定性提升**：
+  - Express 添加全局错误处理中间件，未处理异常不再导致进程崩溃。
+  - `HomeAssistantClient` 连接 HA 失败时改为指数退避 + 最大 12 次重试，超次数后明确退出。
+  - `home-assistant-registry` 自动刷新时捕获 `reload()` 错误，避免中断后续刷新。
+  - `bridge-service.refreshAll` 改为 `Promise.all` 并行刷新多 bridge。
+  - `web-ui.ts` 启动时缓存 `index.html`，避免每次请求磁盘 IO。
+- **前端稳定性与中文化**：
+  - 顶层添加 Error Boundary，组件异常时显示中文错误提示和刷新按钮，防止白屏。
+  - `useEntities` 在组件卸载时 abort 在途请求。
+  - 修复 `web-api.ts` Basic Auth realm、`bridge.ts` 状态 reason、docs 中的 `HAMH` / `Home-Assistant-Matter-Hub` 等中文化残留。
+
+### Fixed
+- CHANGELOG 0.2.0 条目中的仓库名笔误（`sctale/home-assistant-matter-hub` → `sctale/hey-matter`）。
+
 ## [0.3.5] - 2026-07-10
 
 ### Fixed
@@ -70,7 +95,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Default storage path: `~/.home-assistant-matter-hub` → `~/.hey-matter`
 - Matter vendor name: `t0bst4r` → `sctale`; product name `MatterHub` → `HeyMatter`
 - App directory: `apps/home-assistant-matter-hub` → `apps/hey-matter`
-- Repository/bugs URLs repointed to `sctale/home-assistant-matter-hub` (GitHub repo name unchanged)
+- Repository/bugs URLs repointed to `sctale/hey-matter` (GitHub repo name unchanged)
 - Documentation URLs repointed to the repository README (no standalone docs site)
 - **Migration required**: existing users must rename env vars (`HAMH_*` → `HM_*`) and move data directory (`~/.home-assistant-matter-hub` → `~/.hey-matter`). Already-paired Matter devices may need re-pairing due to vendor/product name change.
 

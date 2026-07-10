@@ -27,6 +27,28 @@ fs.cpSync(
   path.join(import.meta.dirname, "LICENSE"),
 );
 
+// 将 apps/hey-matter/package.json 的版本号同步到 hey-matter/config.yaml
+const packageJsonPath = path.join(import.meta.dirname, "package.json");
+const addonConfigPath = path.join(projectRoot, "hey-matter", "config.yaml");
+const addonPackageTgzPath = path.join(projectRoot, "hey-matter", "package.tgz");
+const appPackageTgzPath = path.join(import.meta.dirname, "package.tgz");
+
+const packageVersion = JSON.parse(
+  fs.readFileSync(packageJsonPath, "utf8"),
+).version;
+
+const addonConfig = fs.readFileSync(addonConfigPath, "utf8");
+const updatedAddonConfig = addonConfig.replace(
+  /^version:\s*"[^"]*"/m,
+  `version: "${packageVersion}"`,
+);
+fs.writeFileSync(addonConfigPath, updatedAddonConfig, "utf8");
+
+// 将构建产物 package.tgz 同步复制到 addon Dockerfile 上下文，便于本地/CI 构建镜像
+if (fs.existsSync(appPackageTgzPath)) {
+  fs.copyFileSync(appPackageTgzPath, addonPackageTgzPath);
+}
+
 /**
  * Resolve a directory in a package
  * @param {string} packageName The path of the package json

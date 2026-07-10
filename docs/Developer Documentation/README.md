@@ -2,7 +2,7 @@
 
 ## Overview
 
-Home Assistant Matter Hub (HAMH) is an addon for Home Assistant that acts as a Matter bridge, exposing Home Assistant devices to Matter controllers (Alexa, Apple Home, Google Home) via local communication. No cloud or custom skills are required.
+Hey Matter is an addon for Home Assistant that acts as a Matter bridge, exposing Home Assistant devices to Matter controllers (Alexa, Apple Home, Google Home) via local communication. No cloud or custom skills are required.
 
 This documentation is intended for developers taking over or contributing to the project. It covers architecture, technologies, and key concepts, especially those related to the Matter protocol and bridging logic.
 
@@ -55,7 +55,7 @@ This documentation is intended for developers taking over or contributing to the
 
 ### Matter Bridge
 
-A bridge is a Matter node that exposes multiple endpoints (devices) to controllers. In HAMH, each bridge is backed by a Matter server node and an aggregator endpoint.
+A bridge is a Matter node that exposes multiple endpoints (devices) to controllers. In Hey Matter, each bridge is backed by a Matter server node and an aggregator endpoint.
 
 - **BridgeServerNode**: Subclass of `ServerNode` from `@matter/main/node`. Configured with bridge metadata and endpoints.
 - **AggregatorEndpoint**: Root endpoint that groups all exposed devices.

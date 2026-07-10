@@ -66,14 +66,14 @@ export class Bridge {
     try {
       this.status = {
         code: BridgeStatus.Starting,
-        reason: "The bridge is starting... Please wait.",
+        reason: "Bridge 正在启动，请稍候...",
       };
       await this.refreshDevices();
       this.endpointManager.startObserving();
       await this.server.start();
       this.status = { code: BridgeStatus.Running };
     } catch (e) {
-      const reason = "Failed to start bridge due to error:";
+      const reason = "Bridge 启动失败：";
       this.log.error(reason, e);
       await this.stop(BridgeStatus.Failed, `${reason}\n${e?.toString()}`);
     }
@@ -81,7 +81,7 @@ export class Bridge {
 
   async stop(
     code: BridgeStatus = BridgeStatus.Stopped,
-    reason = "Manually stopped",
+    reason = "已手动停止",
   ) {
     this.endpointManager.stopObserving();
     await this.server.cancel();
@@ -93,7 +93,7 @@ export class Bridge {
       this.dataProvider.update(update);
       await this.refreshDevices();
     } catch (e) {
-      const reason = "Failed to update bridge due to error:";
+      const reason = "Bridge 更新失败：";
       this.log.error(reason, e);
       await this.stop(BridgeStatus.Failed, `${reason}\n${e?.toString()}`);
     }

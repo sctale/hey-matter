@@ -7,6 +7,7 @@ import {
 } from "@hey-matter/common";
 import { Ajv } from "ajv";
 import express from "express";
+import type { NextFunction, Request, Response } from "express";
 import type { BridgeService } from "../services/bridges/bridge-service.js";
 import type { HomeAssistantRegistry } from "../services/home-assistant/home-assistant-registry.js";
 import { endpointToJson } from "../utils/json/endpoint-to-json.js";
@@ -119,6 +120,12 @@ export function matterApi(
     } else {
       res.status(404).send("Not Found");
     }
+  });
+
+  // Router 级错误处理：捕获本路由内未处理的异常
+  router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    console.error("Matter API 请求处理失败", err);
+    res.status(500).json({ error: "服务器内部错误" });
   });
 
   return router;

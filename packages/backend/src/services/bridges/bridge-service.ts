@@ -41,9 +41,8 @@ export class BridgeService extends Service {
   }
 
   async refreshAll() {
-    for (const bridge of this.bridges) {
-      await bridge.refreshDevices();
-    }
+    // 并行刷新所有桥接设备，提高刷新效率
+    await Promise.all(this.bridges.map((bridge) => bridge.refreshDevices()));
   }
 
   get(id: string): Bridge | undefined {

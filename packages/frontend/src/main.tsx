@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { ErrorBoundary } from "react-error-boundary";
 import { Provider as StateProvider } from "react-redux";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
@@ -12,6 +13,7 @@ import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { ThemeProvider } from "@mui/material/styles";
+import { ErrorFallback } from "./components/misc/ErrorFallback.tsx";
 import { NotificationsProvider } from "./components/notifications/notifications-provider.tsx";
 import { routes } from "./routes.tsx";
 import { store } from "./state/store.ts";
@@ -54,7 +56,12 @@ createRoot(document.getElementById("root")!).render(
           }}
         />
         <NotificationsProvider>
-          <RouterProvider router={router} />
+          <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => window.location.reload()}
+          >
+            <RouterProvider router={router} />
+          </ErrorBoundary>
         </NotificationsProvider>
       </ThemeProvider>
     </StateProvider>

@@ -44,6 +44,7 @@ export class HomeAssistantClient extends Service {
 
   private async createConnection(
     props: HomeAssistantClientProps,
+    attempt = 0,
   ): Promise<Connection> {
     try {
       const connection = await createConnection({
@@ -55,20 +56,28 @@ export class HomeAssistantClient extends Service {
       await this.waitForHomeAssistantToBeUpAndRunning(connection);
       return connection;
     } catch (reason: unknown) {
-      return this.handleInitializationError(reason, props);
+      return this.handleInitializationError(reason, props, attempt);
     }
   }
 
   private async handleInitializationError(
     reason: unknown,
     props: HomeAssistantClientProps,
+    attempt: number,
   ): Promise<Connection> {
     if (reason === ERR_CANNOT_CONNECT) {
+      if (attempt >= 12) {
+        throw new Error(
+          "连接 Home Assistant 失败，已达到最大重试次数。请检查 HA 地址和网络。",
+        );
+      }
+      // 指数退避：初始 5 秒，最大 60 秒
+      const delay = Math.min(5000 * Math.pow(2, attempt), 60000);
       this.log.error(
-        `Unable to connect to home assistant with url: ${props.url}. Retrying in 5 seconds...`,
+        `无法连接到 Home Assistant（${props.url}），将在 ${delay / 1000} 秒后第 ${attempt + 1} 次重试...`,
       );
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      return this.createConnection(props);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return this.createConnection(props, attempt + 1);
     }
     if (reason === ERR_INVALID_AUTH) {
       throw new Error(

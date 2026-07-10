@@ -1,6 +1,6 @@
-# Home-Assistant-Matter-Hub
+# Hey Matter
 
-!["Home-Assistant-Matter-Hub"](./assets/hamh-logo-small.png)
+!["Hey Matter"](./assets/hamh-logo-small.png)
 
 ---
 
@@ -40,7 +40,7 @@ To check which types are supported, please review the
 The Matter protocol is designed to work best with UDP and IPv6 within your local network. At the moment some
 manufacturers built their controllers to be compatible with IPv4, too, but this can break at any time with any update.
 
-Many users report connection issues when using VLANs or firewalls, where HAMH and the assistant devices (Alexa, Google
+Many users report connection issues when using VLANs or firewalls, where Hey Matter and the assistant devices (Alexa, Google
 Home, ...) are not placed in the same network segment. Please make sure to review the
 [common connectivity issues](./Guides/Connectivity%20Issues.md).
 

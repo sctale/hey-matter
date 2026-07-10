@@ -31,6 +31,7 @@
 
 1. 在 HA 的「设置 → 加载项 → 加载项商店」右上角点击「⋮」→「仓库」，添加：`https://github.com/sctale/hey-matter`
 2. 刷新加载项商店，找到「Hey Matter」点击安装
+   > 如果 `hey-matter/config.yaml` 中配置了 `image` 字段，Home Assistant Supervisor 会直接拉取对应架构的预构建镜像，无需在设备本地构建。
 3. 安装后点击「启动」，即可在左侧边栏看到 Hey Matter 面板
 4. 如需配置，进入加载项的「配置」标签页调整日志级别等选项
 
