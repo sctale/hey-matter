@@ -5,6 +5,12 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2026-07-10
+
+### Fixed
+- **表单字段标签中文化**：修复新建/编辑 Bridge 页面表单字段标签为英文的问题。根因是 JSON Schema（bridge-config-schema.ts）中的 title/description 字段为英文，RJSF 表单渲染时直接使用这些值作为字段标签。现已全部中文化（名称、端口、国家代码、包含、排除、类型、值、功能开关等）。
+- **RJSF 按钮文本中文化**：通过自定义 translateString 将 RJSF 表单的数组操作按钮（添加、删除、上移、下移、复制、清除）的 title 提示中文化。
+
 ## [0.3.2] - 2026-07-10
 
 ### Fixed

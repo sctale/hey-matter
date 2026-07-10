@@ -4,6 +4,7 @@ import type {
   CustomValidator,
   FormValidation,
   RJSFValidationError,
+  TranslatableString,
   UiSchema,
   WidgetProps,
 } from "@rjsf/utils";
@@ -13,6 +14,28 @@ import { type ComponentType, useCallback } from "react";
 import type { ValidationError } from "./validation-error.ts";
 
 const Form = withTheme(Theme);
+
+// RJSF 按钮文本中文化映射
+const zhTranslations: Partial<Record<TranslatableString, string>> = {
+  [TranslatableString.AddItemButton]: "添加",
+  [TranslatableString.RemoveButton]: "删除",
+  [TranslatableString.CopyButton]: "复制",
+  [TranslatableString.MoveUpButton]: "上移",
+  [TranslatableString.MoveDownButton]: "下移",
+  [TranslatableString.ClearButton]: "清除",
+  [TranslatableString.KeyLabel]: "键",
+  [TranslatableString.AddButton]: "添加",
+  [TranslatableString.AddPropertyButton]: "添加属性",
+  [TranslatableString.UnsupportedField]: "不支持的字段类型",
+  [TranslatableString.ErrorsYamlResults]: "校验失败：",
+};
+
+const translateString = (
+  str: TranslatableString,
+  params?: readonly string[],
+): string => {
+  return zhTranslations[str] ?? params?.join(" ") ?? String(str);
+};
 
 export interface FormEditorProps {
   schema: JSONSchema7;
@@ -63,6 +86,7 @@ export const FormEditor = (props: FormEditorProps) => {
       showErrorList={false}
       widgets={props.widgets}
       formContext={props.formContext}
+      translateString={translateString}
       onChange={(data) => onChange(data.formData, data.errors)}
     />
   );

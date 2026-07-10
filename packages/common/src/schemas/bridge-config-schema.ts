@@ -6,12 +6,12 @@ const homeAssistantMatcherSchema: JSONSchema7 = {
   default: { type: "", value: "" },
   properties: {
     type: {
-      title: "Type",
+      title: "类型",
       type: "string",
       enum: Object.values(HomeAssistantMatcherType),
     },
     value: {
-      title: "Value",
+      title: "值",
       type: "string",
       minLength: 1,
     },
@@ -21,16 +21,16 @@ const homeAssistantMatcherSchema: JSONSchema7 = {
 };
 
 const homeAssistantFilterSchema: JSONSchema7 = {
-  title: "Include or exclude entities",
+  title: "包含或排除实体",
   type: "object",
   properties: {
     include: {
-      title: "Include",
+      title: "包含",
       type: "array",
       items: homeAssistantMatcherSchema,
     },
     exclude: {
-      title: "Exclude",
+      title: "排除",
       type: "array",
       items: homeAssistantMatcherSchema,
     },
@@ -40,21 +40,20 @@ const homeAssistantFilterSchema: JSONSchema7 = {
 };
 
 const featureFlagSchema: JSONSchema7 = {
-  title: "Feature Flags",
+  title: "功能开关",
   type: "object",
   properties: {
     coverDoNotInvertPercentage: {
-      title: "Do not invert Percentages for Covers",
+      title: "不反转盖帘百分比",
       description:
-        "Do not invert the percentage of covers to match Home Assistant (not Matter compliant)",
+        "不反转盖帘的百分比以匹配 Home Assistant（不符合 Matter 标准）",
       type: "boolean",
       default: false,
     },
 
     includeHiddenEntities: {
-      title: "Include Hidden Entities",
-      description:
-        "Include entities that are marked as hidden in Home Assistant",
+      title: "包含隐藏实体",
+      description: "包含在 Home Assistant 中标记为隐藏的实体",
       type: "boolean",
       default: false,
     },
@@ -64,24 +63,24 @@ const featureFlagSchema: JSONSchema7 = {
 
 export const bridgeConfigSchema: JSONSchema7 = {
   type: "object",
-  title: "Bridge Config",
+  title: "Bridge 配置",
   properties: {
     name: {
-      title: "Name",
+      title: "名称",
       type: "string",
       minLength: 1,
       maxLength: 32,
     },
     port: {
-      title: "Port",
+      title: "端口",
       type: "number",
       minimum: 1,
     },
     countryCode: {
-      title: "Country Code",
+      title: "国家代码",
       type: "string",
       description:
-        "An ISO 3166-1 alpha-2 code to represent the country in which the Node is located. Only needed if the commissioning fails due to missing country code.",
+        "ISO 3166-1 alpha-2 国家代码，表示设备所在国家。仅在配对因缺少国家代码而失败时需要填写。",
       minLength: 2,
       maxLength: 3,
     },
