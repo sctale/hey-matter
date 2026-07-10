@@ -5,6 +5,12 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2026-07-10
+
+### Fixed
+- **重新构建前端产物**：v0.3.1 的 package.tgz 可能未包含最新中文化代码，v0.3.2 清理旧 dist 后重新构建并验证产物包含中文文案和返回按钮代码。
+- **BridgeConfigEditor 标签提示优化**：移除冗余的英文括注 `（labels）`，简化为「特别是使用标签时」。
+
 ## [0.3.1] - 2026-07-09
 
 ### Added

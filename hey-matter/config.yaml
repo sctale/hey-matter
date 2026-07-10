@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/apps/configuration#app-configuration
 name: Hey Matter
-version: "0.3.1"
+version: "0.3.2"
 slug: hey_matter
 description: >-
   将 Home Assistant 的实体发布到任意 Matter 兼容控制器（Alexa、Apple Home、Google Home）的 Bridge 模拟器。

@@ -113,7 +113,7 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
           文档
         </Link>{" "}
         以了解正确的 Bridge 配置方式。{" "}
-        <strong>特别是使用标签（labels）时，请务必阅读"Labels"章节。</strong>
+        <strong>特别是使用标签时，请务必阅读"Labels"章节。</strong>
       </Alert>
 
       <Stack spacing={2}>
