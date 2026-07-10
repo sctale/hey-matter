@@ -11,18 +11,13 @@ arch:
   - amd64
 init: false
 ingress: true
-ingress_port: 0
 panel_icon: mdi:bridge
 panel_title: Hey Matter
 startup: services
 boot: auto
 homeassistant_api: true
-image: ghcr.io/sctale/hey-matter-addon
-stage: stable
-timeout: 30
 map:
-  - type: app_config
-    read_only: false
+  - config:rw
 options:
   app_log_level: info
   disable_log_colors: false
