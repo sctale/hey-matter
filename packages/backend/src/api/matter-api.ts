@@ -23,6 +23,7 @@ export function matterApi(
   });
 
   // 暴露 HA 全量实体列表（含 friendly_name），供前端 filter 配置自动补全使用
+  // 当 registry 尚未加载到实体时，返回 ready:false 以便前端展示"正在连接 HA"的占位提示
   router.get("/entities", (_, res) => {
     const entities: EntityOption[] = Object.values(registry.entities).map(
       (e) => ({
@@ -37,7 +38,16 @@ export function matterApi(
         hidden_by: e.hidden_by as string | undefined,
       }),
     );
-    res.status(200).json(entities);
+    // registry 没有 isLoaded/isReady 等就绪标志字段，用实体数量是否为 0 判断是否就绪
+    if (Object.keys(registry.entities).length === 0) {
+      res.status(200).json({
+        ready: false,
+        reason: "正在连接 Home Assistant，请稍候...",
+        entities: [],
+      });
+    } else {
+      res.status(200).json({ ready: true, entities });
+    }
   });
 
   router.get("/bridges", async (_, res) => {

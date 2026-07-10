@@ -1,13 +1,22 @@
 import type { EntityOption } from "@hey-matter/common";
 import Autocomplete from "@mui/material/Autocomplete";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import type { SxProps, Theme } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import type { WidgetProps } from "@rjsf/utils";
 import { useMemo } from "react";
 
-/** formContext 上下文：实体候选列表 + 当前表单数据（用于反查 sibling type） */
+/** formContext 上下文：实体候选列表 + 加载状态 + 当前表单数据（用于反查 sibling type） */
 interface MatcherFormContext {
   entities?: EntityOption[];
+  isLoading?: boolean;
+  error?: Error | null;
+  retry?: () => void;
+  ready?: boolean;
+  reason?: string;
   formData?: {
     filter?: {
       include?: Array<{ type?: string; value?: string }>;
@@ -22,6 +31,12 @@ interface MatcherFormContext {
  *  - domain / platform / label / area / entity_category：提供去重后的候选值列表
  *  - pattern（或未选 type）：提供全量实体，option 显示 friendly_name，选中填 entity_id
  * freeSolo 开启，允许手动输入通配 pattern（如 light.*）。
+ *
+ * 四态渲染：
+ *  - isLoading：显示 CircularProgress + "加载中..."，Autocomplete loading=true
+ *  - error：显示红色错误文本 + "重试"按钮，Autocomplete 禁用
+ *  - ready 且无候选实体：显示灰色提示（不阻止 freeSolo 输入）
+ *  - 有候选实体：正常渲染 Autocomplete
  */
 export const MatcherValueWidget = (props: WidgetProps) => {
   const {
@@ -37,6 +52,11 @@ export const MatcherValueWidget = (props: WidgetProps) => {
 
   const ctx = formContext as MatcherFormContext | undefined;
   const entities = ctx?.entities ?? [];
+  const isLoading = ctx?.isLoading ?? false;
+  const error = ctx?.error ?? null;
+  const retry = ctx?.retry;
+  const ready = ctx?.ready ?? false;
+  const reason = ctx?.reason;
   const formData = ctx?.formData;
 
   // 解析 id（如 root_filter_include_0_value）反查 sibling type
@@ -119,28 +139,65 @@ export const MatcherValueWidget = (props: WidgetProps) => {
 
   const textFieldSx: SxProps<Theme> = { width: "100%" };
 
+  // 错误态下禁用 Autocomplete
+  const isDisabled = !!error || disabled || readonly;
+  // ready 且无候选实体（用于显示提示，不阻止 freeSolo 输入）
+  const isEmptyReady = ready && entities.length === 0;
+
   return (
-    <Autocomplete
-      freeSolo
-      size="small"
-      fullWidth
-      options={options}
-      value={value ?? ""}
-      getOptionLabel={getOptionLabel}
-      isOptionEqualToValue={isOptionEqualToValue}
-      onChange={handleChange}
-      onInputChange={handleInputChange}
-      loading={entities.length === 0}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          required={required}
-          disabled={disabled || readonly}
-          size="small"
-          sx={textFieldSx}
-        />
+    <Stack spacing={0.5} sx={{ width: "100%" }}>
+      <Autocomplete
+        freeSolo
+        size="small"
+        fullWidth
+        options={error ? [] : options}
+        value={value ?? ""}
+        getOptionLabel={getOptionLabel}
+        isOptionEqualToValue={isOptionEqualToValue}
+        onChange={handleChange}
+        onInputChange={handleInputChange}
+        loading={isLoading}
+        disabled={isDisabled}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            required={required}
+            disabled={isDisabled}
+            size="small"
+            sx={textFieldSx}
+          />
+        )}
+      />
+
+      {/* 加载中：CircularProgress + "加载中..." 文本 */}
+      {isLoading && !error && (
+        <Stack direction="row" spacing={1} alignItems="center">
+          <CircularProgress size={14} />
+          <Typography variant="body2" color="text.secondary">
+            加载中...
+          </Typography>
+        </Stack>
       )}
-    />
+
+      {/* 错误态：红色错误文本 + "重试"按钮 */}
+      {error && (
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="body2" color="error">
+            {error.message}
+          </Typography>
+          <Button size="small" onClick={() => retry?.()}>
+            重试
+          </Button>
+        </Stack>
+      )}
+
+      {/* ready 且无候选实体：灰色提示（freeSolo 仍可手动输入）；有 reason 时优先展示 reason */}
+      {!isLoading && !error && isEmptyReady && (
+        <Typography variant="body2" color="text.secondary">
+          {reason ?? "未找到实体，请检查 Home Assistant 实体配置"}
+        </Typography>
+      )}
+    </Stack>
   );
 };

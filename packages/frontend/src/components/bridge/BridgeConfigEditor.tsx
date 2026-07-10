@@ -43,7 +43,8 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
   const [isValid, setIsValid] = useState<boolean>(true);
 
   // 实体候选数据（用于 filter matcher value 自动补全）
-  const { data: entities } = useEntities();
+  const { data: entities, isLoading, error, retry, ready, reason } =
+    useEntities();
 
   // 指定 filter include/exclude 数组中每一项的 value 字段使用自定义 widget
   const uiSchema = useMemo(
@@ -67,10 +68,18 @@ export const BridgeConfigEditor = (props: BridgeConfigEditorProps) => {
   // 注册自定义 widget
   const widgets = useMemo(() => ({ matcherValue: MatcherValueWidget }), []);
 
-  // 传给 widget 的上下文：实体列表 + 当前 formData（widget 据此反查 sibling type）
+  // 传给 widget 的上下文：实体列表 + 加载状态 + 当前 formData（widget 据此反查 sibling type）
   const formContext = useMemo(
-    () => ({ entities, formData: config }),
-    [entities, config],
+    () => ({
+      entities,
+      isLoading,
+      error,
+      retry,
+      ready,
+      reason,
+      formData: config,
+    }),
+    [entities, isLoading, error, retry, ready, reason, config],
   );
 
   const validatePort = useCallback(

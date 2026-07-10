@@ -5,6 +5,16 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.5] - 2026-07-10
+
+### Fixed
+- **修复 Bridge 新建页面实体加载不出来**：前端实体自动补全组件缺乏错误处理和状态区分，后端在 HA 未就绪时静默返回空数组，导致用户只看到无限 loading 转圈。本次改造覆盖完整加载链路：
+  - **后端** `/api/matter/entities` 端点响应格式从裸数组改为对象 `{ ready, reason?, entities }`，当 HA 实体注册表未就绪时返回 `ready: false` + reason 提示。
+  - **前端** `fetchEntities` 增加 `AbortController` 15 秒超时，避免后端无响应时请求永久挂起。
+  - **前端** `useEntities` hook 暴露 `retry()` 函数和 `ready`/`reason` 状态，支持手动重试。
+  - **前端** `MatcherValueWidget` 实现四态 UI：加载中（CircularProgress+"加载中"）、加载失败（错误原因+重试按钮）、加载成功但无实体（"未找到实体"提示）、有候选（正常 Autocomplete）。不再用 `entities.length === 0` 一概显示 loading。
+- **ingress 路径验证**：确认 `supportIngress` 的 URL 重写逻辑在 HA ingress 环境下能正确命中 `/api/matter/entities` 路由，无需修改。
+
 ## [0.3.4] - 2026-07-10
 
 ### Fixed
