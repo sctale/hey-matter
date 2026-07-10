@@ -5,6 +5,11 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.7] - 2026-07-10
+
+### Fixed
+- **修复新建 Bridge 页面崩溃 `t.map is not a function`**：RJSF 表单在 `formData` 中数组字段（`filter.include`/`filter.exclude`）不存在时，内部 `ArrayFieldTemplate` 对 `undefined` 调用 `.map()` 导致崩溃。在 `bridge-config-schema.ts` 中为所有数组字段添加 `default: []`，为对象字段添加 `default: {}`，确保 RJSF 能正确初始化空值。
+
 ## [0.3.6] - 2026-07-10
 
 ### Changed
