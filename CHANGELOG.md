@@ -5,6 +5,11 @@ All notable changes to this fork (`sctale/hey-matter`, product name **Hey Matter
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2026-07-10
+
+### Fixed
+- **修复安装后无法进入应用的致命崩溃**：v0.3.3 引入的 RJSF 表单中文化代码存在致命 Bug——`FormEditor.tsx` 中 `TranslatableString` 枚举使用 `import type` 导入，但代码中将其作为值使用（`TranslatableString.AddItemButton`）。esbuild 编译时会擦除 `import type`，导致运行时 `TranslatableString` 为 undefined，访问其属性抛出 `ReferenceError`，整个前端模块加载失败、应用白屏崩溃。v0.3.4 将 `TranslatableString` 改为 `import` 值导入，esbuild 正确内联枚举为数字索引，运行时不再引用该变量。
+
 ## [0.3.3] - 2026-07-10
 
 ### Fixed

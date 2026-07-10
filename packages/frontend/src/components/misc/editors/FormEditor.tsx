@@ -1,10 +1,10 @@
 import { withTheme } from "@rjsf/core";
 import { Theme } from "@rjsf/mui";
+import { TranslatableString } from "@rjsf/utils";
 import type {
   CustomValidator,
   FormValidation,
   RJSFValidationError,
-  TranslatableString,
   UiSchema,
   WidgetProps,
 } from "@rjsf/utils";
@@ -22,12 +22,24 @@ const zhTranslations: Partial<Record<TranslatableString, string>> = {
   [TranslatableString.CopyButton]: "复制",
   [TranslatableString.MoveUpButton]: "上移",
   [TranslatableString.MoveDownButton]: "下移",
-  [TranslatableString.ClearButton]: "清除",
-  [TranslatableString.KeyLabel]: "键",
   [TranslatableString.AddButton]: "添加",
-  [TranslatableString.AddPropertyButton]: "添加属性",
-  [TranslatableString.UnsupportedField]: "不支持的字段类型",
-  [TranslatableString.ErrorsYamlResults]: "校验失败：",
+  [TranslatableString.ArrayItemTitle]: "项",
+  [TranslatableString.EmptyArray]: "暂无项目，点击下方按钮添加。",
+  [TranslatableString.MissingItems]: "缺少项目定义",
+  [TranslatableString.YesLabel]: "是",
+  [TranslatableString.NoLabel]: "否",
+  [TranslatableString.CloseLabel]: "关闭",
+  [TranslatableString.ErrorsLabel]: "错误",
+  [TranslatableString.NewStringDefault]: "新值",
+  [TranslatableString.ClearLabel]: "清除",
+  [TranslatableString.PreviewLabel]: "预览",
+  [TranslatableString.NowLabel]: "现在",
+  [TranslatableString.AriaDateLabel]: "选择日期",
+  [TranslatableString.OptionalObjectAdd]: "为可选字段添加数据",
+  [TranslatableString.OptionalObjectRemove]: "移除可选字段数据",
+  [TranslatableString.OptionalObjectEmptyMsg]: "可选字段无数据",
+  [TranslatableString.Type]: "类型",
+  [TranslatableString.Value]: "值",
 };
 
 const translateString = (
